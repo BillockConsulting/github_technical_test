@@ -5,7 +5,7 @@ class GithubCommunicator
   GITHUB_ISSUE_TITLE_TEMPLATE = ":repo has been deleted"
   GITHUB_ISSUE_ASSIGNMENT_TARGET = "evilstickman"
   GITHUB_REPO_NAME = ':owner/:repo'
-  GITHUB_USER_ACCESS_TOKEN = 'ca84577d6d7dc579516ab5d93411eaab291fb4a7'
+  GITHUB_USER_ACCESS_TOKEN = ENV['github_access_token']
 
   def create_issue_in_target_repo(organization, repo_deleted, repo_for_notification, message)
     octokit_client.user_agent = GITHUB_USER_AGENT
