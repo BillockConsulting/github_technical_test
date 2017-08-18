@@ -3,6 +3,7 @@ require 'rack/test'
 require 'rspec'
 
 ENV['RACK_ENV'] = 'test'
+ENV['github_access_token'] = '123abc'
 
 require File.expand_path '../../webhook_responder.rb', __FILE__
 

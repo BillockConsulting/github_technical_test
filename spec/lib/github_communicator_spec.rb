@@ -60,5 +60,13 @@ describe 'GithubCommunicator' do
       expect(octokit_class).to receive(:new).and_return(octokit_stub)
       subject
     end
+
+    it 'Includes an @ mention' do
+      expect(octokit_stub).to receive(:create_issue)
+        .with(anything, anything, a_string_matching(/\@#{GithubCommunicator::GITHUB_ISSUE_ASSIGNMENT_TARGET}/), anything)
+        .and_return(SAMPLE_ISSUE_CREATION_RESPONSE)
+      expect(octokit_class).to receive(:new).and_return(octokit_stub)
+      subject
+    end
   end 
 end
