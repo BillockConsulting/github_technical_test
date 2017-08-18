@@ -9,4 +9,5 @@ group :development, :test do
     gem 'guard-rspec', require: false
     gem 'rack'
     gem 'rack-test'
+    gem 'webmock'
 end
