@@ -21,7 +21,7 @@ post '/webhook' do
     # In a production app, this would be much more elaborate. For now, just
     # return a 500 error and hide details for security reason (someone trying
     # to hack their way through the webhook endpoint)
-    puts "An error occurred: " + e.message
+    logger.error("An error occurred: " + e.message)
     500
   end
 end
