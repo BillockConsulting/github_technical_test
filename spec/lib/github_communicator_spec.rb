@@ -1,81 +1,64 @@
 require File.expand_path '../../spec_helper.rb', __FILE__
 
 describe 'GithubCommunicator' do
-  pending "It be broke"
   let(:test_target_intance) {GithubCommunicator.new}
   context ".create_issue_in_target_repo" do
     let(:organization) { "BillockConsulting" }
-    let(:repo) { "sample_repo" }
+    let(:repo_for_notification) { "sample_repo" }
+    let(:repo_deleted) { "sample_repo" }
     let(:message) { "the repo was baleeted" }
-    let(:issue_creation_url) { GithubCommunicator::GITHUB_API_URL }
-    let(:subject) { test_target_intance.create_issue_in_target_repo(organization, repo, message) }
-    let(:stub_issue_request) { stub_request(:post, /#{issue_creation_url}*/).to_return(body: SAMPLE_ISSUE_CREATION_RESPONSE.to_json) }
-    let(:stub_issue_request_user_agent_header) do
-      stub_request(:post, /#{issue_creation_url}*/)
-        .with(headers: {'User-Agent': GithubCommunicator::GITHUB_USER_AGENT})
-        .to_return(body: SAMPLE_ISSUE_CREATION_RESPONSE.to_json) 
-    end
-
-    it "sends creates an issue in the target repo" do
-      stub = stub_issue_request
-      subject
-      expect(stub).to have_been_requested
-    end
-    context 'error handling' do
-      it 'logs an error if 400 is received (invalid JSON)' do
-        expect(false).to be
-      end
+    let(:octokit_class) { Octokit::Client }
+    let(:octokit_stub) { Octokit::Client.new }
+    let(:subject) { test_target_intance.create_issue_in_target_repo(organization, repo_deleted, repo_for_notification, message) }
     
-      it 'logs an error if 422 is received (invalid param value)' do
-        expect(false).to be
-      end
-    end
-  
-    it 'correctly redirects the request if necessary' do
-      expect(false).to be
-    end
- 
-    
-    it 'provides the appropriate auth tokens to github' do
-      stub_issue_request
+    it "creates a new octokit instance if necessary" do
+      allow(octokit_stub).to receive(:create_issue)
+        .with(any_args)
+        .and_return(SAMPLE_ISSUE_CREATION_RESPONSE)
+      expect(octokit_class).to receive(:new).and_return(octokit_stub)
       subject
-      expect(WebMock).to have_requested(:post, /#{issue_creation_url}*/)
-        .with(query: hash_including({'customer_id'=> GithubCommunicator::GITHUB_USER_AGENT}))
     end
-  
-    it 'includes a user agent header' do
-      stub_issue_request
+
+    it "Specifies a personal access key when creating the client" do
+      allow(octokit_stub).to receive(:create_issue)
+        .with(any_args)
+        .and_return(SAMPLE_ISSUE_CREATION_RESPONSE)
+      expect(octokit_class).to receive(:new)
+        .with(hash_including({access_token: instance_of(String)}))
+        .and_return(octokit_stub)
       subject
-      expect(WebMock).to have_requested(:post, /#{issue_creation_url}*/)
-        .with(headers: {'User-Agent'=> GithubCommunicator::GITHUB_USER_AGENT})
-    end
-  end
-
-  context ".build_issue_creation_params" do
-    let(:repo) { "sample_repo" }
-    let(:message) { "the repo was baleeted" }
-    let(:assignee) { "evilstickman" }
-    let(:params) { {} }
-    let(:subject) { test_target_intance.build_issue_creation_params(repo, message, assignee) }
-
-    it 'includes appropriate keys' do
-      params = subject
-      expect(params.keys).to include(:title, :body, :assignee)
     end
 
-    it 'includes repo name in the title' do
-      params = subject
-      expect(params[:title]).to match /#{repo}/
+    it "Includes the deleted repo name in the issue title" do
+      expect(octokit_stub).to receive(:create_issue)
+        .with(anything, a_string_matching(/#{repo_deleted}/), anything, hash_including({assignee: anything}))
+        .and_return(SAMPLE_ISSUE_CREATION_RESPONSE)
+      expect(octokit_class).to receive(:new).and_return(octokit_stub)
+      subject
     end
 
-    it 'sets the body correctly' do
-      params = subject
-      expect(params[:body]).to eq message
+    it "Sends the notification to the correct repo" do
+      expect(octokit_stub).to receive(:create_issue)
+        .with(a_string_matching(/#{repo_for_notification}/), anything, anything, hash_including({assignee: anything}))
+        .and_return(SAMPLE_ISSUE_CREATION_RESPONSE)
+      expect(octokit_class).to receive(:new).and_return(octokit_stub)
+      subject
     end
 
-    it 'sets the assignee correctly' do
-      params = subject
-      expect(params[:assignee]).to eq assignee
+    it "Specifies the correct organization" do
+      expect(octokit_stub).to receive(:create_issue)
+        .with(a_string_matching(/#{organization}/), anything, anything, hash_including({assignee: anything}))
+        .and_return(SAMPLE_ISSUE_CREATION_RESPONSE)
+      expect(octokit_class).to receive(:new).and_return(octokit_stub)
+      subject
     end
-  end
+
+    it "Specifies an assignee" do
+      expect(octokit_stub).to receive(:create_issue)
+        .with(anything, anything, anything, hash_including({assignee: anything}))
+        .and_return(SAMPLE_ISSUE_CREATION_RESPONSE)
+      expect(octokit_class).to receive(:new).and_return(octokit_stub)
+      subject
+    end
+  end 
 end

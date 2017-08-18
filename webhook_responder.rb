@@ -6,14 +6,26 @@ configure do
 end
 
 post '/webhook' do
-  webhook_content = JSON.parse(request.body.read)
-  if(webhook_content["action"] == 'deleted')
-    org_name = webhook_content["organization"]["login"]
-    repo_deleted_name = webhook_content["repository"]["name"]
-    repo_notification_name = "notification_repo"
-    message = "Received from webhook"
-    ghc = GithubCommunicator.new
-    ghc.create_issue_in_target_repo(org_name, repo_deleted_name, repo_notification_name, message)
+  begin
+    webhook_content = JSON.parse(request.body.read)
+    if(webhook_content["action"] == 'deleted')
+      org_name = webhook_content["organization"]["login"]
+      repo_deleted_name = webhook_content["repository"]["name"]
+      repo_notification_name = "notification_repo"
+      message = "Received from webhook"
+      ghc = GithubCommunicator.new
+      ghc.create_issue_in_target_repo(org_name, repo_deleted_name, repo_notification_name, message)
+    end
     200
+  rescue StandardError => e
+    # In a production app, this would be much more elaborate. For now, just
+    # return a 500 error and hide details for security reason (someone trying
+    # to hack their way through the webhook endpoint)
+    puts "An error occurred: " + e.message
+    500
   end
+end
+
+not_found do
+  404
 end
