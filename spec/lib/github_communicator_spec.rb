@@ -4,12 +4,12 @@ describe 'GithubCommunicator' do
   let(:test_target_intance) {GithubCommunicator.new}
   context ".create_issue_in_target_repo" do
     let(:organization) { "BillockConsulting" }
-    let(:repo_for_notification) { "sample_repo" }
+    let(:repo_for_notification) { GithubCommunicator::GITHUB_NOTIFICATION_REPO }
     let(:repo_deleted) { "sample_repo" }
     let(:message) { "the repo was baleeted" }
     let(:octokit_class) { Octokit::Client }
     let(:octokit_stub) { Octokit::Client.new }
-    let(:subject) { test_target_intance.create_issue_in_target_repo(organization, repo_deleted, repo_for_notification, message) }
+    let(:subject) { test_target_intance.create_issue_in_target_repo(organization, repo_deleted, message) }
     
     it "creates a new octokit instance if necessary" do
       allow(octokit_stub).to receive(:create_issue)
