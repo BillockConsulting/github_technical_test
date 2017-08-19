@@ -11,10 +11,9 @@ post '/webhook' do
     if(webhook_content["action"] == 'deleted')
       org_name = webhook_content["organization"]["login"]
       repo_deleted_name = webhook_content["repository"]["name"]
-      repo_notification_name = "notification_repo"
       message = "Received from webhook"
       ghc = GithubCommunicator.new
-      ghc.create_issue_in_target_repo(org_name, repo_deleted_name, repo_notification_name, message)
+      ghc.create_issue_in_target_repo(org_name, repo_deleted_name, message)
     end
     200
   rescue StandardError => e
