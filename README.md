@@ -7,7 +7,7 @@ The application is a simple Sinatra app. It has a single endpoint - `/webhook` -
 
 It uses Octokit (https://github.com/octokit/octokit.rb) to communicate with GitHub. I opted to do this to provide a more readable way of communicating with the API, and prevent me from needing to deal with the authentication headers, but if you like I can rewrite the code to use 'net/http' instead so that you can see that I have the capability to construct a web request from scratch.
 
-There are 10 unit tests that express the functionality of the webhook responder service. They are written using RSpec - you can run them from the project directory with "bundle exec rspec".
+There are 11 unit tests that express the functionality of the webhook responder service. They are written using RSpec - you can run them from the project directory with "bundle exec rspec".
 
 This project uses Bundler to manage gem dependencies. Be sure to run `bundle install` from the project directory prior to running the code.
 
@@ -89,6 +89,6 @@ To test this code in a live environment, follow these steps:
 * Error reporting, security, and logging are largely not implemented for this task. The problem statement did not seem to indicate that these were necessary.
 * I have several other companies moving very quickly, and I wanted to get this in as soon as possible - as a result, there were a few cases where I didn't devote significant effort (such as the aforementioned hardcoded values, and the error reporting/security/logging, and so forth). If you'd rather I take the additional time to implement these features, I am happy to do so - simply let me know either through email, a quick call, or by opening issues on this repository.
 * You can wire this up to any github account by modifying the value on line 6 of `lib/github_communicator.rb`. 
-* To adjust the target notification repo, change line 15 of `webhook_communicator.rb` to reflect the target repo to receive notifications. Note that I pull the organization and deleted repo name from the webhook, so the notification repo needs to exist in the organization - if this is not the case, the request will result in a 500 error
+* To adjust the target notification repo, change line 9 of `lib/github_communicator.rb` to reflect the target repo to receive notifications. Note that I pull the organization and deleted repo name from the webhook, so the notification repo needs to exist in the organization - if this is not the case, the request will result in a 500 error
 
 I am happy to update this to address any shortcomings or answer any issues. I hope this meets your needs, and I am very interested in working with GitHub. Have a great weekend!
