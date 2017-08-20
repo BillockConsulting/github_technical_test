@@ -34,7 +34,7 @@ This application was developed on Microsoft Windows 10 using Visual Studio Code,
 
 This project depends on Ruby and Sinatra, using the Bundler gem to manage dependencies.
 
-* To install ruby, follow the instructions at https://www.ruby-lang.org/en/documentation/installation/ for your platform
+* To install ruby, follow the instructions at https://www.ruby-lang.org/en/documentation/installation/ for your platform. This application was written against Ruby version 2.4.1p111 for Windows
 * Once Ruby has been installed, install the Bundler gem using `gem install bundler` from the command line
 * Once Ruby and bundler have been installed, install application dependencies by entering `bundle install` from the command line
 
