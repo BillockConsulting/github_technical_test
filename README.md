@@ -163,6 +163,6 @@ To test this code in a live environment, follow these steps:
 * You can wire this up to any github account by modifying the value on line 6 of `lib/github_communicator.rb`. 
 * To adjust the target notification repo, change line 9 of `lib/github_communicator.rb` to reflect the target repo to receive notifications. Note that I pull the organization and deleted repo name from the webhook, so the notification repo needs to exist in the organization - if this is not the case, the request will result in a 500 error
 * I used OctoKit to simplify communications (I mostly didn't want to deal with the auth sequence, in the interest of time).
-* I used the `assignee` paramter in creating the issue, in addition to the `@` mention requested. The `assignee` method is noted as being deprecated - if you like I can modify the code to fetch user details from the `users` endpoint and use this in the `assignees` array parameter instead
+* I used the `assignee` paramater in creating the issue, in addition to the `@` mention requested. The `assignee` method is noted as being deprecated - if you like I can modify the code to fetch user details from the `users` endpoint and use this in the `assignees` array parameter instead
 
 I am happy to update this to address any shortcomings or answer any issues. I hope this meets your needs, and I am very interested in working with GitHub. Have a great weekend!
