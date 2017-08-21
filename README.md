@@ -62,7 +62,7 @@ From the github account menu (upper right hand corner of the screen), select "se
 
 From the "Settings" menu, select "Personal access tokens"
 
-![image](images/personal_access_token.jpg]
+![image](images/personal_access_token.jpg)
 
 Once on the Personal Access Tokens page, select "Generate new token"
 
