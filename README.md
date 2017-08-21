@@ -137,8 +137,8 @@ The webserver is going to run within the context of a specific user. Update this
 
 Edit your application's conf file (usually located in `/etc/nginx/nginx.conf`) to direct requests to the ruby application that represents your webhook processing code. This will consist of two steps:
 
-1 - Configure nginx to pass control to Phusion Passenger to run the ruby application
-2 - Configure Phusion Passenger to correctly call the ruby application. This simply consists of specifying the correct Ruby runtime path, and then configuring the application server to point at your code directory.
+1. Configure nginx to pass control to Phusion Passenger to run the ruby application
+2. Configure Phusion Passenger to correctly call the ruby application. This simply consists of specifying the correct Ruby runtime path, and then configuring the application server to point at your code directory.
 
 Once the above two items are complete, Phusion Passenger will use `config.ru`, which is located in the application's root directory, to invoke the Sinatra app for each request. You can specify a `PORT` environment variable to change the port on which your application will respond.
 
