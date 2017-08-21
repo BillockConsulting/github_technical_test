@@ -24,7 +24,7 @@ Responses are empty by choice - I think it represents a security risk to provide
 * `webhook` endpoint, when an error occurs - responds with 500 and logs a message using `logger.error`
 * any other endpoint results in a 404
 
-I hard-coded the username to assign the issue to, the repo to hold the issue, and the organization. These are available as class constants in file lib/github_communicator.rb. If you like, I can easily rewrite this to use additional environment variables and make this code more flexible.
+I hard-coded the username to assign the issue to, and the repo to hold the issue. The organization, and the deleted repo name, are pulled from the webhook body. The hardcoded values are available as class constants in file lib/github_communicator.rb. If you like, I can easily rewrite this to use additional environment variables and make this code more flexible.
 
 ## Development environment
 
