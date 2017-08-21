@@ -159,7 +159,7 @@ To test this code in a live environment, follow these steps:
 # Caveats
 * Many things are hard-coded here, as the problem statement I received via email indicated that I was to be working exclusively with repos and organizations under my control. In a true work setting, I would clarify this requirement.
 * Error reporting, security, and logging are largely not implemented for this task. The problem statement did not seem to indicate that these were necessary.
-* I have several other companies moving very quickly, and I wanted to get this in as soon as possible - as a result, there were a few cases where I didn't devote significant effort (such as the aforementioned hardcoded values, and the error reporting/security/logging, and so forth). If you'd rather I take the additional time to implement these features, I am happy to do so - simply let me know either through email, a quick call, or by opening issues on this repository.
+* I have several other companies moving very quickly, and I wanted to get this in as soon as possible.
 * You can wire this up to any github account by modifying the value on line 6 of `lib/github_communicator.rb`. 
 * To adjust the target notification repo, change line 9 of `lib/github_communicator.rb` to reflect the target repo to receive notifications. Note that I pull the organization and deleted repo name from the webhook, so the notification repo needs to exist in the organization - if this is not the case, the request will result in a 500 error
 * I used OctoKit to simplify communications (I mostly didn't want to deal with the auth sequence, in the interest of time).
