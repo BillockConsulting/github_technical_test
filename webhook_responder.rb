@@ -11,7 +11,7 @@ post '/webhook' do
     if(webhook_content["action"] == 'deleted')
       org_name = webhook_content["organization"]["login"]
       repo_deleted_name = webhook_content["repository"]["name"]
-      message = "Received from webhook"
+      message = "Received a repo deletion request from webhook"
       ghc = GithubCommunicator.new
       ghc.create_issue_in_target_repo(org_name, repo_deleted_name, message)
     end
